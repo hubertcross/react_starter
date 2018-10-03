@@ -184,9 +184,9 @@ class ProductSearchPanel extends React.Component {
 	    	 	</div> 
 	    	 	<div className="row">
 	    	 		<div className="col-md-2 offset-md-5 col-sm-4 offset-sm-4 col-xs-2">
-						<div className="form-group" controlId="formControlsSelect">
+						<div className="form-group" controlid="formControlsSelect">
 						<label className="mr-sm-2">Results per page</label> 
-							<select className="col-xs-1 custom-select" componentClass="select" placeholder="select">
+							<select className="col-xs-1 custom-select" componentclass="select" placeholder="select">
 								<option value="10">10</option>
 								<option value="11">11</option>
 							</select>
@@ -198,14 +198,14 @@ class ProductSearchPanel extends React.Component {
 	    	 			<button className="btn btn-primary">Search</button>
 	    	 		</div>
 				</div>
-	    	{/*
-			    <Row>
-			    	<Col className="col-sm-2 col-sm-offset-5">
-						<PulseLoader color={'#123abc'} loading={this.state.loading}/>			    	
-			    	</Col>
-			    </Row>			
+	    	
 			    <div className="row">
-			    	<div classame="col">
+			    	<div className="col-sm-2 col-sm-offset-5">
+						<PulseLoader color={'#123abc'} loading={this.state.loading}/>			    	
+			    	</div>
+			    </div>			
+			    <div className="row">
+			    	<div className="col">
 			    		<DynamicResultTable
 			    			resultsRows={this.state.resultsRows}
 			    			resultsHeaders={this.state.resultsHeaders}
@@ -215,7 +215,7 @@ class ProductSearchPanel extends React.Component {
 			    		/>				            				            
 			    	</div>
 			    </div>        
-			    */}    
+			       
     	 	</form>
     	 	</div>
     	);
