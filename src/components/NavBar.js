@@ -6,8 +6,8 @@ import React from 'react';
 // import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 // import MenuItem from 'react-bootstrap/lib/MenuItem';
 
-import { Link } from 'react-router-dom';
-import { Route } from 'react-router-dom'
+// import { Link } from 'react-router-dom';
+// import { Route } from 'react-router-dom'
 
 
 /* stateless functional component for bootstrap navitem */
@@ -66,9 +66,9 @@ class NavDropDown extends React.Component {
 }
 
 class NavBar extends React.Component {
-	constructor(props) {
-		super(props);
-	}
+	// constructor(props) {
+	// 	super(props);
+	// }
 // `const NavLink = ({ to, label }) => (<Route>{({ match }) => <li className={match ? 'active'
 //                : ''}><Link to={to}>{label}</Link></li>}</Route>);`
 

@@ -1,28 +1,15 @@
 import React from 'react';
 // import DynamicSearchBar from '../components/DynamicSearchBar';
-import Header from '../components/Header';
+// import Header from '../components/Header';
 
 import DynamicResultTable from '../components/DynamicResultTable';
-// import Button from 'react-bootstrap/lib/Button';
 
-// import Grid from 'react-bootstrap/lib/Grid';
-// import Col from 'react-bootstrap/lib/Col';
-// import Row from 'react-bootstrap/lib/Row';
-// import * as ReactBootstrap from 'react-bootstrap';
-// import FormGroup from 'react-bootstrap/lib/FormGroup';
-// import FormControl from 'react-bootstrap/lib/FormControl';
-// import ControlLabel from 'react-bootstrap/lib/ControlLabel';
-
-import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
+// import Dropdown from 'react-dropdown';
+// import 'react-dropdown/style.css';
 
 // import { LoadingOverlay, Loader } from 'react-overlay-loader';
 // import 'react-overlay-loader/styles.css';
 import { PulseLoader } from 'react-spinners';
-
-// var products = require('../lib/products');
-
-
 
 
 // 2018-01-25
@@ -200,7 +187,7 @@ class ProductSearchPanel extends React.Component {
 				</div>
 	    	
 			    <div className="row">
-			    	<div className="col-sm-2 col-sm-offset-5">
+			    	<div className="col-md-2 offset-md-5 mt-2 mb-2">
 						<PulseLoader color={'#123abc'} loading={this.state.loading}/>			    	
 			    	</div>
 			    </div>			

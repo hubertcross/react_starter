@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css'; 
 
-import Header from './components/Header';
+// import Header from './components/Header';
 
 
 import NavBar from './components/NavBar';
 
 import ScreenHolder from './components/ScreenHolder';
 
-var settings = require('./config/settings');
+// var settings = require('./config/settings');
 
 class App extends Component {
   
