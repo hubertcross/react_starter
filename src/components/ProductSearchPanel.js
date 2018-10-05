@@ -4,8 +4,8 @@ import React from 'react';
 
 import DynamicResultTable from '../components/DynamicResultTable';
 
-// import Dropdown from 'react-dropdown';
-// import 'react-dropdown/style.css';
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
 // import { LoadingOverlay, Loader } from 'react-overlay-loader';
 // import 'react-overlay-loader/styles.css';
@@ -42,7 +42,8 @@ class ProductSearchPanel extends React.Component {
 			aplicacionSearchInput: '',
 			resultsRows: [],
 			resultsHeaders: [],
-			searchDone: false // track if a search has been made, to render DynamicResultTable or not
+			searchDone: false, // track if a search has been made, to render DynamicResultTable or not
+			selectedPageSizeOption: {value: 5, label: "5"}, // default page size
 		};
 		// this assigns the handler functions to the class
 		// this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
@@ -57,19 +58,8 @@ class ProductSearchPanel extends React.Component {
 		this.searchFunction = this.props.myOptions.searchFunction.bind(this);
 		this.paginationUpdateFunction = this.props.myOptions.paginationUpdateFunction.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
+		this.updateSelectedPageSize = this.updateSelectedPageSize.bind(this);
 	}
-
-	// handleFilterTextChange(filterText) {
-	// 	this.setState({
-	// 		filterText: filterText
-	// 	});
-	// }
-
-	// handleInStockChange(inStockOnly) {
-	// 	this.setState({
-	// 		inStockOnly: inStockOnly
-	// 	});
-	// }
 
 	// this is known as prop diffing
 	// it makes sure we only operate when the property we care about has changed
@@ -87,8 +77,9 @@ class ProductSearchPanel extends React.Component {
 			event.preventDefault();
 		}
 		console.log("ARG! You submitted the form.");
-		console.log(this.state.alternoSearchInput)
-		console.log(this.state.originalarchInput)
+		console.log(this.state.alternoSearchInput);
+		console.log(this.state.originalarchInput);
+		console.log("pagesize: " + this.state.selectedPageSizeOption.value);
 
 		/************
 		CALL /api/products and get search results here
@@ -101,19 +92,26 @@ class ProductSearchPanel extends React.Component {
 		parameterArray[parameterArray.length] = { pName : "o", pData : this.state.originalSearchInput};
 		parameterArray[parameterArray.length] = { pName : "d", pData : this.state.descripcionSearchInput};
 		parameterArray[parameterArray.length] = { pName : "ap", pData : this.state.aplicacionSearchInput};
-		// page size
-		parameterArray[parameterArray.length] = { pName : "ps", pData : 5};
+		// page size - must be grabbed from pageSize combobox in this component
+		parameterArray[parameterArray.length] = { pName : "pagesiz", pData : this.state.selectedPageSizeOption.value};
 		// if it's a new submit, we grab page 1, otherwise we grab the page being clicked on in the pagination component
 		if (event) {
-			parameterArray[parameterArray.length] = { pName : "pn", pData : 1};	
+			parameterArray[parameterArray.length] = { pName : "pagenum", pData : 1};	
 		}
 		else {
-			parameterArray[parameterArray.length] = { pName : "pn", pData : this.props.paginationActivePage};
+			parameterArray[parameterArray.length] = { pName : "pagenum", pData : this.props.paginationActivePage};
 		}
 		
 
-		// this.searchFunction(this.props.config, 'sav/productdetails', parameterArray, this.props.itemsCountPerPage	);
-		this.searchFunction(this.props.config, 'cities', parameterArray, this.props.itemsCountPerPage	);
+		// this.searchFunction(this.props.config, 'cities', parameterArray, this.props.itemsCountPerPage	);
+		this.searchFunction(this.props.config, 'cities', parameterArray, this.state.selectedPageSizeOption.value	);
+	}
+
+	updateSelectedPageSize(newSelection) {
+		this.setState({
+			selectedPageSizeOption: newSelection
+		});
+		console.log("New page size option: " + JSON.stringify(newSelection));
 	}
 
 	handleInputChange(event) {
@@ -129,6 +127,24 @@ class ProductSearchPanel extends React.Component {
 	}	
 
 	render() {
+ 
+		const pageSizeOptions = [{ value:  5, label:  "5" }
+								,{ value:  6, label:  "6" }
+								,{ value:  7, label:  "7" }
+								,{ value:  8, label:  "8" }
+								,{ value:  9, label:  "9" }
+								,{ value: 10, label: "10" }
+								,{ value: 11, label: "11" }
+								,{ value: 12, label: "12" }
+								,{ value: 13, label: "13" }
+								,{ value: 14, label: "14" }
+								,{ value: 15, label: "15" }
+								,{ value: 16, label: "16" }
+								,{ value: 17, label: "17" }
+								,{ value: 18, label: "18" }
+								,{ value: 19, label: "19" }
+								,{ value: 20, label: "20" }];
+
  		return (
  			<div className="container">
  			<form className="dynamic-search" onSubmit={(event) => this.handleSubmit(event)}>
@@ -169,15 +185,17 @@ class ProductSearchPanel extends React.Component {
 	    	 			/>
 	    	 		</div>	    	 		
 	    	 	</div> 
+	    	 {/* Should this page size selector be a component so we can track its state? */}
 	    	 	<div className="row">
 	    	 		<div className="col-md-2 offset-md-5 col-sm-4 offset-sm-4 col-xs-2">
-						<div className="form-group" controlid="formControlsSelect">
+						{/*<div className="form-group" controlid="formControlsSelect">
 						<label className="mr-sm-2">Results per page</label> 
 							<select className="col-xs-1 custom-select" componentclass="select" placeholder="select">
 								<option value="10">10</option>
 								<option value="11">11</option>
 							</select>
-						</div>
+						</div>*/}
+						<Dropdown options={pageSizeOptions} onChange={(newSelection) => {this.updateSelectedPageSize(newSelection)}} value={this.state.selectedPageSizeOption.label} placeholder="Select an option" />
     				</div>
 				</div>	    	 	
 				<div className="row">

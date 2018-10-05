@@ -6,20 +6,13 @@ import React, { Component } from 'react';
 import Header from './Header';
 import ProductSearchPanel from './ProductSearchPanel';
 
-// import Grid from 'react-bootstrap/lib/Grid';
-// import Col from 'react-bootstrap/lib/Col';
-// import Row from 'react-bootstrap/lib/Row';
-
 // import Pagination from "react-js-pagination";
-// import Pagination from 'react-bootstrap/lib/Pagination';
 
 // import { RingLoader } from 'react-spinners';
 var cities = require('../lib/cities');
 
 const PageItem = props => {
-  // const pageURI = window.location.hash + window.location.search;
   const liClassName = (props.activePage === props.pageName) ? "page-item active" : "page-item";
-  // const ahrefClassName = (props.disabled) ? "nav-link disabled" : "nav-link" ;
   return (
     <li className={liClassName} onClick={(e) => {props.updateActivePage(e, props.pageName)}}><a className="page-link">{props.pageName}</a></li>
   );
@@ -29,15 +22,16 @@ class Pagination extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      linesPerPage: 10,
-      linesTotalCount: 100
+      activePage: 1
+    //   linesPerPage: this.props.itemsCountPerPage,
+    //   linesTotalCount: this.props.totalItemsCount
     }
     this.updateActivePage = this.updateActivePage.bind(this);
   }
 
+  /* Updates the highlighted page in the pagination component */
   updateActivePage(e, pageName) {
     e.preventDefault();
-    // console.log("ugh lele: " + console.log((e.detail)));
     console.log("pageName: " + pageName);
 
     // If Previous is clicked, decrement the activePage if we're not already on the first
@@ -58,22 +52,28 @@ class Pagination extends React.Component {
         activePage: pageName
       })            
     }
-
     console.log("New active page: " + this.state.activePage)
-
   }
+
   // Props: activePage, itemsCountPerPage, totalItemsCount
   render() {
     const pageitems = [];
+    const numberOfPages = Math.floor(this.props.totalItemsCount / this.props.itemsCountPerPage);
+    console.log("fullcount: " + this.props.totalItemsCount);
+    console.log("items per page:" + this.props.itemsCountPerPage);
+    console.log("number of pages: " + numberOfPages);
 
+    // Before the loop, push the "Prev" page
     pageitems.push(<PageItem key="Prev" pageName="Prev" updateActivePage={this.updateActivePage}/>);
-    for (let i = 1; i <= this.props.itemsCountPerPage; i++) {
-      // pageString = (i == 0 ? "Previous" : i);
-      // pageString = (i == this.props.itemsCountPerPage - 1 ? "Next" : i);
+    // Loop from "1" to the number of pages ****TODO**** this should 
+    // Really break down into a "..." in the center so that we dont get a crazy long pagination
+    // Component on the user interface !!! 20181004
+    for (let i = 1; i <= numberOfPages; i++) {
       pageitems.push(
         <PageItem key={i} pageName={i} activePage={this.state.activePage} updateActivePage={this.updateActivePage}/>
       );
     }   
+    // After the loop, push the "Next" page
     pageitems.push(<PageItem key="Next" pageName="Next" updateActivePage={this.updateActivePage}/>);
 
     return (
@@ -93,14 +93,15 @@ class ProductSearchScreen extends Component {
     this.child = React.createRef();
     // you either bind first before you specify these in state, or you bind at same moment you specify them in state
     // this.handlePageChange = this.handlePageChange.bind(this);
-    // this.paginationUpdate = this.paginationUpdate.bind(this);
+    // Without this, state cannot be set from function called further down in hierarchy
+    this.paginationUpdate = this.paginationUpdate.bind(this);
 
     this.state = {
       loading: false,
       // Pagination
-      paginationActivePage: 1,
+      // paginationActivePage: 1,
       paginationLinesPerPage: 10,
-      paginationTotalCount: 100,
+      paginationTotalCount: 40,
       myOtherStateObject: {},
       // Send the search function in my options to the dynamic components!!
       myOptions: {
@@ -151,17 +152,24 @@ class ProductSearchScreen extends Component {
           columnsToDisplay={columnsToDisplay}
           config={this.props.config}
           uri={this.props.uri}
+          totalNumberOfRows={this.state.totalNumberOfRows}
           // paginationActivePage={this.state.paginationActivePage}
           // itemsCountPerPage={this.state.paginationLinesPerPage}
 
         />
-        <Pagination
-          activePage={this.state.paginationActivePage}
-          itemsCountPerPage={this.state.paginationLinesPerPage}
-          totalItemsCount={this.state.paginationTotalCount}
-          // onChange={this.handlePageChange}
-          // innerClass='pagination'
-        />    
+        <div className="container">
+          <div className="row">
+            <div className="col-md-10 offset-md-2">
+              <Pagination
+                activePage={this.state.paginationActivePage}
+                itemsCountPerPage={this.state.paginationLinesPerPage}
+                totalItemsCount={this.state.paginationTotalCount}
+                // onChange={this.handlePageChange}
+                // innerClass='pagination'
+              />  
+            </div>
+          </div>
+        </div>  
     
       </div>
     );
