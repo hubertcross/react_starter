@@ -1,16 +1,8 @@
 import React from 'react';
-// import DynamicSearchBar from '../components/DynamicSearchBar';
-// import Header from '../components/Header';
-
 import DynamicResultTable from '../components/DynamicResultTable';
-
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
-
-// import { LoadingOverlay, Loader } from 'react-overlay-loader';
-// import 'react-overlay-loader/styles.css';
 import { PulseLoader } from 'react-spinners';
-
 
 // 2018-01-25
 /*
@@ -27,7 +19,7 @@ import { PulseLoader } from 'react-spinners';
  * props:
  * columnsToDisplay
 */
-class ProductSearchPanel extends React.Component {
+class CitySearchPanel extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -45,16 +37,7 @@ class ProductSearchPanel extends React.Component {
 			searchDone: false, // track if a search has been made, to render DynamicResultTable or not
 			selectedPageSizeOption: {value: 5, label: "5"}, // default page size
 		};
-		// this assigns the handler functions to the class
-		// this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
-		// this.handleInStockChange = this.handleInStockChange.bind(this);
-		// this.handleButtonClick = this.handleButtonClick.bind(this);
-		// this.handleSearch = this.handleSearch.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		// this.handleAlternoSearchInputTextChange		= this.handleAlternoSearchInputTextChange.bind(this);
-		// this.handleOriginalSearchInputTextChange	= this.handleOriginalSearchInputTextChange.bind(this);
-		// this.doProductSearch = this.doProductSearch.bind(this);
-		// 	this.doProductSearch = products.doProductSearch.bind(this);
 		this.searchFunction = this.props.myOptions.searchFunction.bind(this);
 		this.paginationUpdateFunction = this.props.myOptions.paginationUpdateFunction.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
@@ -82,7 +65,7 @@ class ProductSearchPanel extends React.Component {
 		console.log("pagesize: " + this.state.selectedPageSizeOption.value);
 
 		/************
-		CALL /api/products and get search results here
+		CALL /api/cities and get search results here
 		update state with search results!
 		**********/
 		// this.searchFunction(this.state.alternoSearchInput);
@@ -188,13 +171,6 @@ class ProductSearchPanel extends React.Component {
 	    	 {/* Should this page size selector be a component so we can track its state? */}
 	    	 	<div className="row">
 	    	 		<div className="col-md-2 offset-md-5 col-sm-4 offset-sm-4 col-xs-2">
-						{/*<div className="form-group" controlid="formControlsSelect">
-						<label className="mr-sm-2">Results per page</label> 
-							<select className="col-xs-1 custom-select" componentclass="select" placeholder="select">
-								<option value="10">10</option>
-								<option value="11">11</option>
-							</select>
-						</div>*/}
 						<Dropdown options={pageSizeOptions} onChange={(newSelection) => {this.updateSelectedPageSize(newSelection)}} value={this.state.selectedPageSizeOption.label} placeholder="Select an option" />
     				</div>
 				</div>	    	 	
@@ -227,4 +203,4 @@ class ProductSearchPanel extends React.Component {
 	}
 }
 			
-export default ProductSearchPanel;
+export default CitySearchPanel;

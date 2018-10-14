@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
-// import './App.css'; 
-
-//import StorePicker from './components/StorePicker';
 import Header from './Header';
-import ProductSearchPanel from './ProductSearchPanel';
+import CitySearchPanel from './CitySearchPanel';
 
-// import Pagination from "react-js-pagination";
-
-// import { RingLoader } from 'react-spinners';
 var cities = require('../lib/cities');
 
 const PageItem = props => {
@@ -23,8 +16,6 @@ class Pagination extends React.Component {
     super(props);
     this.state = {
       activePage: 1
-    //   linesPerPage: this.props.itemsCountPerPage,
-    //   linesTotalCount: this.props.totalItemsCount
     }
     this.updateActivePage = this.updateActivePage.bind(this);
   }
@@ -86,7 +77,7 @@ class Pagination extends React.Component {
   }
 }
 
-class ProductSearchScreen extends Component {
+class CitySearchScreen extends Component {
 
   constructor(props) {
     super(props);
@@ -146,7 +137,7 @@ class ProductSearchScreen extends Component {
           loading={this.state.loading} 
         />*/}
         <Header headerText="City search"/>
-          <ProductSearchPanel
+          <CitySearchPanel
           ref={this.child}
           myOptions={this.state.myOptions}
           columnsToDisplay={columnsToDisplay}
@@ -176,4 +167,4 @@ class ProductSearchScreen extends Component {
   }
 }
 
-export default ProductSearchScreen;
+export default CitySearchScreen;
